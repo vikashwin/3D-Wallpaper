@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <title>3D Rotating Gallery | Music & Custom Wallpaper</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="container">
+        <div id="wallpaper"></div>
+
+        <!-- COMPACT MEDIA STUDIO: Image Upload + Music Player (side by side elegant) -->
+        <div class="media-studio">
+            <!-- Image customizer pill (compact) -->
+            <div class="customizer-pill">
+                <span class="pill-icon">🖼️</span>
+                <span class="pill-text">gallery</span>
+                <label class="upload-btn-mini" id="compactUploadTrigger">
+                    📤 Upload
+                    <input type="file" id="imageUploadInput" accept="image/jpeg,image/png,image/webp,image/jpg" multiple style="display: none;">
+                </label>
+                <button class="reset-btn-mini" id="resetDefaultBtn">⟳ Reset</button>
+            </div>
+
+            <!-- Music Player Card with full controls -->
+            <div class="music-player-card" id="musicCard">
+                <div class="player-header">
+                    <span class="player-title">🎵 background melody</span>
+                    <span style="font-size: 11px; color:#ffcc88;" id="musicStatusIcon">⏹️</span>
+                </div>
+                <div class="player-controls">
+                    <button class="ctrl-btn" id="playPauseMusicBtn" title="Play/Pause">▶️</button>
+                    <button class="ctrl-btn" id="stopMusicBtn" title="Stop">⏹️</button>
+                    <div class="volume-slider">
+                        <span class="volume-icon">🔊</span>
+                        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.5">
+                    </div>
+                    <label class="ctrl-btn" id="uploadMusicLabel" title="Upload MP3">📂</label>
+                    <input type="file" id="musicFileInput" accept="audio/mpeg,audio/mp3,audio/wav,audio/ogg" style="display: none;">
+                </div>
+              
+            </div>
+        </div>
+
+        <button id="pauseButton" aria-label="Toggle auto-rotate">
+            <span id="pauseIcon">⏸️</span> Pause
+        </button>
+        <div class="zoom-toast" id="zoomIndicator">Zoom: 1.0x</div>
+    </div>
+
+   <script src="index.js"></script>
+</body>
+</html>

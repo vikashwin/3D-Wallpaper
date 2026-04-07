@@ -1,0 +1,312 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', sans-serif;
+        }
+
+        /* main 3d container */
+        #container {
+            width: 100vw;
+            height: 100vh;
+            perspective: 1400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #container.grabbing {
+            cursor: grabbing;
+        }
+
+        #wallpaper {
+            position: relative;
+            width: 50vmin;
+            height: 50vmin;
+            transform-style: preserve-3d;
+            transition: transform 0.05s linear;
+            will-change: transform;
+        }
+
+        .panel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.94;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 255, 255, 0.2) inset;
+            border-radius: 18px;
+            backdrop-filter: blur(2px);
+            transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.2s ease;
+            will-change: transform;
+        }
+
+        .panel:hover {
+            opacity: 1;
+            transform: scale(1.07) translateZ(28px);
+            cursor: pointer;
+            border-color: rgba(255, 215, 0, 0.7);
+            box-shadow: 0 0 45px rgba(0, 0, 0, 0.9);
+        }
+
+        /* --- REDESIGNED COMPACT UPLOAD PANEL (Minimal, Modern, Floating) --- */
+        .media-studio {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        /* Main control pill - elegant glassmorphism */
+        .customizer-pill {
+            background: rgba(20, 28, 35, 0.75);
+            backdrop-filter: blur(16px);
+            border-radius: 60px;
+            padding: 6px 16px 6px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .customizer-pill:hover {
+            background: rgba(20, 28, 35, 0.9);
+            border-color: rgba(255, 200, 100, 0.6);
+        }
+
+        .pill-icon {
+            font-size: 1.2rem;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+        }
+
+        .pill-text {
+            color: white;
+            font-weight: 500;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            background: rgba(255,255,240,0.15);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-family: monospace;
+        }
+
+        .upload-btn-mini, .reset-btn-mini {
+            background: rgba(0, 0, 0, 0.55);
+            border: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: monospace;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,255,200,0.4);
+        }
+
+        .upload-btn-mini:hover, .reset-btn-mini:hover {
+            background: #000000aa;
+            border-color: #ffcc66;
+            transform: scale(1.02);
+        }
+
+        /* --- Music Player Card (Collapsible / Elegant) --- */
+        .music-player-card {
+            background: rgba(12, 18, 24, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 215, 140, 0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            width: 260px;
+            transition: all 0.25s ease;
+            cursor: default;
+        }
+
+        .player-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 0 6px;
+        }
+
+        .player-title {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #ffecb3;
+            letter-spacing: 1px;
+            background: rgba(0,0,0,0.5);
+            padding: 2px 10px;
+            border-radius: 40px;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .ctrl-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,215,0,0.5);
+        }
+
+        .ctrl-btn:hover {
+            background: #ffcc44cc;
+            color: #1e1e2a;
+            transform: scale(1.05);
+            border-color: white;
+        }
+
+        .volume-slider {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,0,0,0.5);
+            padding: 4px 8px;
+            border-radius: 40px;
+        }
+
+        .volume-slider input {
+            width: 80px;
+            cursor: pointer;
+            background: #ffdd99;
+            height: 3px;
+            border-radius: 5px;
+            accent-color: #ffaa33;
+        }
+
+        .volume-icon {
+            font-size: 0.8rem;
+        }
+
+        .track-info {
+            font-size: 0.65rem;
+            color: #dddddd;
+            text-align: center;
+            margin-top: 6px;
+            font-family: monospace;
+            background: rgba(0,0,0,0.4);
+            border-radius: 20px;
+            padding: 3px 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .file-input-hidden {
+            display: none;
+        }
+
+        /* instructions & controls */
+        .instructions {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 13px;
+            font-weight: 500;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            width: fit-content;
+            margin: 0 auto;
+            padding: 6px 16px;
+            border-radius: 60px;
+            pointer-events: none;
+            font-family: monospace;
+            z-index: 20;
+        }
+
+        #pauseButton {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            padding: 8px 18px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
+            color: white;
+            border: 1px solid rgba(255,255,200,0.5);
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            z-index: 100;
+            font-family: inherit;
+        }
+
+        #pauseButton:hover {
+            background: rgba(0, 0, 0, 0.85);
+            border-color: #ffcc44;
+        }
+
+        .zoom-toast {
+            position: absolute;
+            bottom: 100px;
+            right: 24px;
+            background: rgba(0,0,0,0.55);
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 11px;
+            color: #eee;
+            font-family: monospace;
+            pointer-events: none;
+            backdrop-filter: blur(5px);
+            z-index: 20;
+        }
+
+        @media (max-width: 680px) {
+            .music-player-card { width: 220px; padding: 6px 10px; }
+            .ctrl-btn { width: 28px; height: 28px; font-size: 0.9rem; }
+            .volume-slider input { width: 60px; }
+            .customizer-pill { padding: 4px 12px; }
+            .upload-btn-mini, .reset-btn-mini { padding: 4px 10px; font-size: 0.7rem; }
+            .instructions { font-size: 9px; bottom: 70px; }
+            #pauseButton { bottom: 18px; left: 18px; padding: 5px 14px; font-size: 13px; }
+        }
